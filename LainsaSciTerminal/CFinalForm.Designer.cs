@@ -56,6 +56,7 @@
             this.btnSustituciones = new System.Windows.Forms.Button();
             this.btnIncidencias = new System.Windows.Forms.Button();
             this.lblPosicion = new System.Windows.Forms.Label();
+            this.chkInoperativo = new System.Windows.Forms.CheckBox();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -262,7 +263,7 @@
             this.panel6.BackColor = System.Drawing.Color.SeaShell;
             this.panel6.Controls.Add(this.btnSustituciones);
             this.panel6.Controls.Add(this.btnIncidencias);
-            this.panel6.Location = new System.Drawing.Point(3, 275);
+            this.panel6.Location = new System.Drawing.Point(3, 287);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(237, 26);
             // 
@@ -296,6 +297,14 @@
             this.lblPosicion.Text = "-----------";
             this.lblPosicion.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
+            // chkInoperativo
+            // 
+            this.chkInoperativo.Location = new System.Drawing.Point(3, 265);
+            this.chkInoperativo.Name = "chkInoperativo";
+            this.chkInoperativo.Size = new System.Drawing.Size(234, 22);
+            this.chkInoperativo.TabIndex = 9;
+            this.chkInoperativo.Text = "El dispositivo queda inoperativo";
+            // 
             // CFinalForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
@@ -303,6 +312,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(240, 285);
+            this.Controls.Add(this.chkInoperativo);
             this.Controls.Add(this.lblPosicion);
             this.Controls.Add(this.panel6);
             this.Controls.Add(this.panel5);
@@ -357,6 +367,7 @@
         private System.Windows.Forms.Button btnSustituciones;
         private System.Windows.Forms.Button btnIncidencias;
         private System.Windows.Forms.Label lblPosicion;
+        private System.Windows.Forms.CheckBox chkInoperativo;
 
     }
 }

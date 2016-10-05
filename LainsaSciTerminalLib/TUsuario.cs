@@ -105,12 +105,12 @@ namespace LainsaTerminalLib
                     };
                     if (dr[4] != DBNull.Value)
                         usuario.TGrupoTrabajo = GetTGrupoTrabajo(dr.GetInt32(4), conn);
-                    // ahora buscamos las instalciones relacionadas con ese usuario
+                    // ahora buscamos las instalaciones relacionadas con ese usuario
                     using (SqlCeCommand cmd2 = conn.CreateCommand())
                     {
                         IList<TInstalacion> il = new List<TInstalacion>();
                         cmd2.CommandText = String.Format("SELECT * FROM UsuarioInstalacion WHERE usuario_id = {0}", id);
-                        SqlCeDataReader dr2 = cmd.ExecuteReader();
+                        SqlCeDataReader dr2 = cmd2.ExecuteReader();
                         while (dr2.Read())
                         { 
                             il.Add(GetTInstalacion(dr2.GetInt32(1), conn));
@@ -142,6 +142,20 @@ namespace LainsaTerminalLib
                     };
                     if (dr[4] != DBNull.Value)
                         usuario.TGrupoTrabajo = GetTGrupoTrabajo(dr.GetInt32(4), conn);
+                    // ahora buscamos las instalaciones relacionadas con ese usuario
+                    using (SqlCeCommand cmd2 = conn.CreateCommand())
+                    {
+                        IList<TInstalacion> il = new List<TInstalacion>();
+                        cmd2.CommandText = String.Format("SELECT * FROM UsuarioInstalacion WHERE usuario_id = {0}", usuario.UsuarioId);
+                        SqlCeDataReader dr2 = cmd2.ExecuteReader();
+                        while (dr2.Read())
+                        {
+                            il.Add(GetTInstalacion(dr2.GetInt32(1), conn));
+                        }
+                        usuario.Instalaciones = il;
+                        if (!dr2.IsClosed) dr2.Close();
+                    }
+
                 }
                 if (!dr.IsClosed) dr.Close();
             }

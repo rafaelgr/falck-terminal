@@ -126,6 +126,14 @@ namespace LainsaSciTerminal
             SaveDatosRevision(conn);
             if (!DescargarPantalla()) return;
             if (!SaveRevision(conn)) return;
+            // Ahora pueden dejar inopertivo el diapositivo desde
+            // la revisión
+            if (chkInoperativo.Checked)
+            {
+                TDispositivo d = tr.Dispositivo;
+                d.Operativo = false;
+                CntSciTerminal.TSave(d, conn);
+            }
             CntSciTerminal.TClose(this.conn);
             Cursor.Current = Cursors.Default;
             MessageBox.Show("Revisión guardada", "AVISO");
@@ -336,6 +344,14 @@ namespace LainsaSciTerminal
             SaveDatosRevision(conn);
             if (!DescargarPantalla()) return;
             if (!SaveRevision(conn)) return;
+            // Ahora pueden dejar inopertivo el diapositivo desde
+            // la revisión
+            if (chkInoperativo.Checked)
+            {
+                TDispositivo d = tr.Dispositivo;
+                d.Operativo = false;
+                CntSciTerminal.TSave(d, conn);
+            }
             CntSciTerminal.TClose(this.conn);
             Cursor.Current = Cursors.Default;
             MessageBox.Show("Revisión guardada", "AVISO");
@@ -358,6 +374,14 @@ namespace LainsaSciTerminal
             SaveDatosRevision(conn);
             if (!DescargarPantalla()) return;
             if (!SaveRevision(conn)) return;
+            // Ahora pueden dejar inopertivo el diapositivo desde
+            // la revisión
+            if (chkInoperativo.Checked)
+            {
+                TDispositivo d = tr.Dispositivo;
+                d.Operativo = false;
+                CntSciTerminal.TSave(d, conn);
+            }
             CntSciTerminal.TClose(this.conn);
             Cursor.Current = Cursors.Default;
             MessageBox.Show("Revisión guardada", "AVISO");
