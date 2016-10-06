@@ -43,12 +43,26 @@ namespace LainsaSciTerminal
         public void CargarGrid()
         {
             IList<TRevision> ltr;
+            IList<TRevision> ltr2;
             CntSciTerminal.TOpen(this.conn);
             if (vPrograma != null)
                 ltr = CntSciTerminal.GetTRevisiones(vPrograma, conn);
             else
                 ltr = CntSciTerminal.GetTRevisiones(false, vDispositivo, conn);
             CntSciTerminal.TClose(this.conn); 
+            // Filtrar las revisiones para las que se tiene permiso.
+            if (usuario.Instalaciones.Count > 0)
+            {
+                ltr2 = new List<TRevision>();
+                foreach (TRevision r in ltr)
+                {
+                    if (CntSciTerminal.checkInstalacion(usuario, r.NInstalacion))
+                    {
+                        ltr2.Add(r);
+                    }
+                }
+                ltr = ltr2;
+            }
             grdRevisiones.DataSource = ltr.ToArray<TRevision>();
             CrearEstiloColumnas();
             MostrarResumen(ltr);
@@ -78,6 +92,12 @@ namespace LainsaSciTerminal
             //DataSet myDataSet = new DataSet();
             //PropertyDescriptorCollection pcol = this.BindingContext[myDataSet, "Table1"].GetItemProperties();
             //DataGridTextBoxColumn colEstado = new ColumnStyle(pcol["Table1"] as PropertyDescriptor);
+            //Icon icon = new Icon(System.IO.File.OpenRead("\\Storage Card\\micono.ico"));
+            DataGridIconColumn colIcono = new DataGridIconColumn();
+            colIcono.ColumnIcon = new Icon(System.IO.File.OpenRead("\\Storage Card\\micono.ico"));
+            colIcono.MappingName = "";
+            colIcono.HeaderText = "";
+            colIcono.Width = 20;
 
             DataGridTextBoxColumn colDispositivo = new DataGridTextBoxColumn();
             colDispositivo.HeaderText = "Dispositivo";
@@ -87,6 +107,11 @@ namespace LainsaSciTerminal
             colPosicion.HeaderText = "Ubicación";
             colPosicion.MappingName = "Posicion";
             colPosicion.Width = 120;
+            DataGridTextBoxColumn colIndustria = new DataGridTextBoxColumn();
+            colPosicion.HeaderText = "N.Industria";
+            colPosicion.MappingName = "NIndustria";
+            colPosicion.Width = 120;
+            prgEstilo.GridColumnStyles.Add(colIcono);
             prgEstilo.GridColumnStyles.Add(colEstado);
             prgEstilo.GridColumnStyles.Add(colFecha);
             prgEstilo.GridColumnStyles.Add(colDispositivo);

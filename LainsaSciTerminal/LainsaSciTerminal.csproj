@@ -96,6 +96,9 @@
     <Compile Include="CambioForm.Designer.cs">
       <DependentUpon>CambioForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="DataGridIconColumn.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="IncidenciaEvolucionForm.cs">
       <SubType>Form</SubType>
     </Compile>

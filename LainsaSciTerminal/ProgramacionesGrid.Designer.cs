@@ -60,6 +60,7 @@
             this.grdProgramas.Size = new System.Drawing.Size(240, 220);
             this.grdProgramas.TabIndex = 0;
             this.grdProgramas.DoubleClick += new System.EventHandler(this.grdProgramas_DoubleClick);
+            this.grdProgramas.CurrentCellChanged += new System.EventHandler(this.grdProgramas_CurrentCellChanged);
             // 
             // lblSC
             // 

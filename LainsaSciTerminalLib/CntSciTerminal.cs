@@ -23,7 +23,27 @@ namespace LainsaTerminalLib
         {
             filename = name;
         }
-        
+
+        public static bool checkInstalacion(TUsuario u, int InstalacionId)
+        {
+            bool res = false;
+            foreach (TInstalacion i in u.Instalaciones)
+            {
+                if (i.InstalacionId == InstalacionId) res = true;
+            }
+            return res;
+        }
+
+        public static bool checkInstalacion(TUsuario u, string NInstalacion)
+        {
+            bool res = false;
+            foreach (TInstalacion i in u.Instalaciones)
+            {
+                if (i.Nombre == NInstalacion) res = true;
+            }
+            return res;
+        }
+
         #region Criptography
         public static string GetHashCode(string password)
         {
