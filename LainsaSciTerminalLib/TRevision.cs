@@ -162,6 +162,13 @@ namespace LainsaTerminalLib
             get { return nIndustria; }
             set { nIndustria = value; }
         }
+
+        private bool hayIncidencia;
+        public bool HayIncidencia
+        {
+            get { return hayIncidencia; }
+            set { hayIncidencia = value; }
+        }
     }
     public static partial class CntSciTerminal
     {
@@ -246,7 +253,7 @@ namespace LainsaTerminalLib
             if (programa == null) return revisiones;
             using (SqlCeCommand cmd = conn.CreateCommand()) 
             {
-                cmd.CommandText = String.Format("SELECT DISTINCT r.revision_id, r.fecha_planificada, d.nombre, r.estado, d.posicion, r.abm, d.nIndustria FROM Revision r INNER JOIN Dispositivo d ON d.dispositivo_id = r.dispositivo_id  WHERE programa_id = {0} ORDER BY fecha_planificada ASC", 
+                cmd.CommandText = String.Format("SELECT DISTINCT r.revision_id, r.fecha_planificada, d.nombre, r.estado, d.posicion, r.abm, d.nIndustria, d.dispositivo_id FROM Revision r INNER JOIN Dispositivo d ON d.dispositivo_id = r.dispositivo_id  WHERE programa_id = {0} ORDER BY fecha_planificada ASC", 
                     programa.ProgramaId);
                 
                 SqlCeDataReader dr = cmd.ExecuteReader();
@@ -261,8 +268,10 @@ namespace LainsaTerminalLib
                         NInstalacion = programa.NInstalacion,
                         Posicion = dr.GetString(4),
                         Abm = dr.GetByte(5),
-                        NIndustria = dr.GetString(6)
+                        NIndustria = dr.GetString(6),
                     };
+                    revision.Dispositivo = new TDispositivo();
+                    revision.Dispositivo.DispositivoId = dr.GetInt32(7);
                     // control de nulos en fechas.
                     if (dr[3] != DBNull.Value) revision.FechaPlanificada = dr.GetDateTime(1);
                     revisiones.Add(revision);
@@ -297,10 +306,10 @@ namespace LainsaTerminalLib
         {
             List<TRevision> revisiones = new List<TRevision>();
             if (dispositivo == null) return revisiones;
-            string sql = String.Format("SELECT DISTINCT r.revision_id, r.fecha_planificada, d.nombre, r.estado, d.posicion, r.abm, d.nIndustria FROM Revision r INNER JOIN Dispositivo d ON d.dispositivo_id = r.dispositivo_id  WHERE d.dispositivo_id = {0} ORDER BY fecha_planificada ASC",
+            string sql = String.Format("SELECT DISTINCT r.revision_id, r.fecha_planificada, d.nombre, r.estado, d.posicion, r.abm, d.nIndustria, d.dispositivo_id FROM Revision r INNER JOIN Dispositivo d ON d.dispositivo_id = r.dispositivo_id  WHERE d.dispositivo_id = {0} ORDER BY fecha_planificada ASC",
                     dispositivo.DispositivoId);
             if(estado)
-                sql = String.Format("SELECT DISTINCT r.revision_id, r.fecha_planificada, d.nombre, r.estado, d.posicion, r.abm, d.nIndustria FROM Revision r INNER JOIN Dispositivo d ON d.dispositivo_id = r.dispositivo_id  WHERE d.dispositivo_id = {0} AND r.estado = '{1}' ORDER BY fecha_planificada ASC",
+                sql = String.Format("SELECT DISTINCT r.revision_id, r.fecha_planificada, d.nombre, r.estado, d.posicion, r.abm, d.nIndustria , d.dispositivo_id FROM Revision r INNER JOIN Dispositivo d ON d.dispositivo_id = r.dispositivo_id  WHERE d.dispositivo_id = {0} AND r.estado = '{1}' ORDER BY fecha_planificada ASC",
                     dispositivo.DispositivoId,
                     "PROGRAMADA");
             using (SqlCeCommand cmd = conn.CreateCommand())
@@ -319,7 +328,7 @@ namespace LainsaTerminalLib
                         NInstalacion = dispositivo.Instalacion.Nombre,
                         Posicion = dr.GetString(4),
                         Abm = dr.GetByte(5),
-                        NIndustria = dr.GetString(6)
+                        NIndustria = dr.GetString(6),
                     };
                     // control de nulos en fechas.
                     if (dr[3] != DBNull.Value) revision.FechaPlanificada = dr.GetDateTime(1);
@@ -367,6 +376,24 @@ namespace LainsaTerminalLib
                 if (!dr.IsClosed) dr.Close();
             }
             return revisiones;
+        }
+
+        public static TRevision HayIncidencias(TRevision tr, SqlCeConnection conn)
+        {
+            int dspId = tr.Dispositivo.DispositivoId;
+            tr.HayIncidencia = false;
+            using (SqlCeCommand cmd = conn.CreateCommand())
+            {
+                cmd.CommandText = String.Format("SELECT * FROM Incidencia WHERE dispositivo_id = {0}",
+                    dspId);
+                SqlCeDataReader dr = cmd.ExecuteReader();
+                if (dr.HasRows)
+                {
+                    tr.HayIncidencia = true;
+                }
+                if (!dr.IsClosed) dr.Close();
+            }
+            return tr;
         }
 
         public static void TSave(TRevision tr, SqlCeConnection conn)

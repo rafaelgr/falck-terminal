@@ -99,6 +99,7 @@
     <Compile Include="DataGridIconColumn.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Icons.cs" />
     <Compile Include="IncidenciaEvolucionForm.cs">
       <SubType>Form</SubType>
     </Compile>

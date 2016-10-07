@@ -10,6 +10,7 @@ namespace LainsaTerminalLib
 {
     public static partial class CntSciTerminal
     {
+        public static IList<TRevision> pLtr;
         public static string filename;
         public static string GetMensajeText()
         {
@@ -110,6 +111,7 @@ namespace LainsaTerminalLib
             else
                 return null; // (2.2) contraseña incorrecta
         }
+
     }
      public class FileName
     {

@@ -132,6 +132,8 @@ namespace LainsaSciTerminal
             sustitucion.TDispositivoOriginal = dspOriginal;
             sustitucion.TDispositivoSustituto = dspSustituto;
             sustitucion.Comentarios = txtComentario.Text.Replace('\'', ' ');
+            sustitucion.Pos = txtPos.Text;
+            sustitucion.Poss = txtPoss.Text;
             sustitucion.Fecha = DateTime.Now;
             CntSciTerminal.TSave(true, sustitucion, conn);
         }

@@ -173,6 +173,21 @@ namespace LainsaTerminalLib
             get { return abm; }
             set { abm = value; }
         }
+
+        private string pos;
+        public string Pos
+        {
+            get { return pos; }
+            set { pos = value; }
+        }
+
+        private string poss;
+        public string Poss
+        {
+            get { return poss; }
+            set { poss = value; }
+        }
+
     }
 
 
@@ -207,9 +222,14 @@ namespace LainsaTerminalLib
                         tSustitucion.TRevision = GetTRevision(dr.GetInt32(7), conn);
                     if (dr[8] != DBNull.Value)
                         tSustitucion.TPrograma = GetTPrograma(dr.GetInt32(8), conn);
+                    if (dr[10] != DBNull.Value)
+                        tSustitucion.Pos = dr.GetString(10);
+                    if (dr[11] != DBNull.Value)
+                        tSustitucion.Pos = dr.GetString(11);
                     if (tSustitucion.TDispositivoOriginal != null)
                         tSustitucion.NInstalacion = tSustitucion.TDispositivoOriginal.Instalacion.Nombre;
                     if (tSustitucion != null) l.Add(tSustitucion);
+
                 }
                 if (!dr.IsClosed)
                     dr.Close();
@@ -246,6 +266,10 @@ namespace LainsaTerminalLib
                         tSustitucion.TRevision = GetTRevision(dr.GetInt32(7), conn);
                     if (dr[8] != DBNull.Value)
                         tSustitucion.TPrograma = GetTPrograma(dr.GetInt32(8), conn);
+                    if (dr[10] != DBNull.Value)
+                        tSustitucion.Pos = dr.GetString(10);
+                    if (dr[11] != DBNull.Value)
+                        tSustitucion.Pos = dr.GetString(11);
                     if (tSustitucion.TDispositivoOriginal != null)
                         tSustitucion.NInstalacion = tSustitucion.TDispositivoOriginal.Instalacion.Nombre;
 
@@ -284,6 +308,10 @@ namespace LainsaTerminalLib
                         tSustitucion.TRevision = GetTRevision(dr.GetInt32(7), conn);
                     if (dr[8] != DBNull.Value)
                         tSustitucion.TPrograma = GetTPrograma(dr.GetInt32(8), conn);
+                    if (dr[10] != DBNull.Value)
+                        tSustitucion.Pos = dr.GetString(10);
+                    if (dr[11] != DBNull.Value)
+                        tSustitucion.Pos = dr.GetString(11);
                     if (tSustitucion.TDispositivoOriginal != null)
                         tSustitucion.NInstalacion = tSustitucion.TDispositivoOriginal.Instalacion.Nombre;
                 }
@@ -313,7 +341,11 @@ namespace LainsaTerminalLib
             if (!CntSciTerminal.FechaNula(ts.Fecha)) fecha = String.Format("'{0}'", ts.Fecha);
                 //fecha_apertura = String.Format("'{0:dd/MM/yyyy}'", ts.Fecha);
             string comentarios = "";
+            string pos = "";
+            string poss = "";
             if (ts.Comentarios != null) comentarios = ts.Comentarios;
+            if (ts.Pos != null) pos = ts.Pos;
+            if (ts.Poss != null) poss = ts.Poss;
             //manejo ss
             byte abm = ts.Abm;
             if (abm != 1) abm = 3;
@@ -337,28 +369,33 @@ namespace LainsaTerminalLib
                         dr.Close();
                 }
                 sql = @"INSERT INTO Sustituciones(sustitucion_id, fecha, comentarios, estado,
-                            usuario_id, dispo_id, disps_id, revision_id, programa_id, abm) 
+                            usuario_id, dispo_id, disps_id, revision_id, programa_id, abm, pos, poss) 
                             VALUES({0},{1},'{2}','{3}',
-                            {4},{5},{6},{7},{8},1)";
+                            {4},{5},{6},{7},{8},1, '{10}', '{11}')";
             }
             else
             {
                 sql = @"UPDATE Sustituciones SET fecha={1},comentarios='{2}',estado='{3}',
                         usuario_id={4}, dispo_id={5}, disps_id={6}, revision_id={7}, programa_id={8},
-                        abm = {9}
+                        abm = {9}, pos='{10}', poss='{11}'
                         WHERE sustitucion_id={0}";
             }
             sql = String.Format(sql, ts.SustitucionId, fecha, comentarios, ts.Estado, 
-                usuario_id, dispo_id, dispos_id, revision_id, programa_id, abm);
+                usuario_id, dispo_id, dispos_id, revision_id, programa_id, abm, pos, poss);
             using (SqlCeCommand cmd = conn.CreateCommand())
             {
                 cmd.CommandText = sql;
                 cmd.ExecuteNonQuery();
             }
             //Ahora actualizamos el estado de los dispositivos
-            sql = @"UPDATE Dispositivo SET estado='{1}'
+            string newpos = ts.TDispositivoOriginal.Posicion;
+            if (pos != "")
+            {
+                newpos = pos;
+            }
+            sql = @"UPDATE Dispositivo SET estado='{1}', posicion = '{2}'
                         WHERE dispositivo_id={0}";
-            sql = String.Format(sql, ts.TDispositivoOriginal.DispositivoId, ts.TDispositivoOriginal.Estado);
+            sql = String.Format(sql, ts.TDispositivoOriginal.DispositivoId, ts.TDispositivoOriginal.Estado, newpos);
             using (SqlCeCommand cmd = conn.CreateCommand())
             {
                 cmd.CommandText = sql;
@@ -366,9 +403,15 @@ namespace LainsaTerminalLib
             }
             if (ts.TDispositivoSustituto != null)
             {
-                sql = @"UPDATE Dispositivo SET estado='{1}'
+                newpos = ts.TDispositivoSustituto.Posicion;
+                if (poss != "")
+                {
+                    newpos = poss;
+                }
+
+                sql = @"UPDATE Dispositivo SET estado='{1}', posicion = '{2}'
                         WHERE dispositivo_id={0}";
-                sql = String.Format(sql, ts.TDispositivoSustituto.DispositivoId, ts.TDispositivoSustituto.Estado);
+                sql = String.Format(sql, ts.TDispositivoSustituto.DispositivoId, ts.TDispositivoSustituto.Estado, newpos);
                 using (SqlCeCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandText = sql;

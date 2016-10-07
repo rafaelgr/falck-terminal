@@ -126,7 +126,7 @@ namespace LainsaSciTerminal
             SaveDatosRevision(conn);
             if (!DescargarPantalla()) return;
             if (!SaveRevision(conn)) return;
-            // Ahora pueden dejar inopertivo el diapositivo desde
+            // Ahora pueden dejar inopertivo el dispositivo desde
             // la revisión
             if (chkInoperativo.Checked)
             {
@@ -344,7 +344,7 @@ namespace LainsaSciTerminal
             SaveDatosRevision(conn);
             if (!DescargarPantalla()) return;
             if (!SaveRevision(conn)) return;
-            // Ahora pueden dejar inopertivo el diapositivo desde
+            // Ahora pueden dejar inopertivo el dispositivo desde
             // la revisión
             if (chkInoperativo.Checked)
             {
@@ -374,7 +374,7 @@ namespace LainsaSciTerminal
             SaveDatosRevision(conn);
             if (!DescargarPantalla()) return;
             if (!SaveRevision(conn)) return;
-            // Ahora pueden dejar inopertivo el diapositivo desde
+            // Ahora pueden dejar inopertivo el dispositivo desde
             // la revisión
             if (chkInoperativo.Checked)
             {

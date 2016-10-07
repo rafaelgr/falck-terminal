@@ -49,14 +49,18 @@ namespace LainsaSciTerminal
                 ltr = CntSciTerminal.GetTRevisiones(vPrograma, conn);
             else
                 ltr = CntSciTerminal.GetTRevisiones(false, vDispositivo, conn);
-            CntSciTerminal.TClose(this.conn); 
+            CntSciTerminal.TClose(this.conn);
+            //foreach (TRevision r in ltr)
+            //{
+            //    r.HayIncidencia = CntSciTerminal.HayIncidencias(r, conn).HayIncidencia;
+            //}
             // Filtrar las revisiones para las que se tiene permiso.
             if (usuario.Instalaciones.Count > 0)
             {
                 ltr2 = new List<TRevision>();
                 foreach (TRevision r in ltr)
                 {
-                    if (CntSciTerminal.checkInstalacion(usuario, r.NInstalacion))
+                    if (usuario.Instalaciones.Count > 0 && CntSciTerminal.checkInstalacion(usuario, r.NInstalacion))
                     {
                         ltr2.Add(r);
                     }
@@ -65,6 +69,7 @@ namespace LainsaSciTerminal
             }
             grdRevisiones.DataSource = ltr.ToArray<TRevision>();
             CrearEstiloColumnas();
+            CntSciTerminal.pLtr = ltr;
             MostrarResumen(ltr);
            
         }
@@ -94,9 +99,9 @@ namespace LainsaSciTerminal
             //DataGridTextBoxColumn colEstado = new ColumnStyle(pcol["Table1"] as PropertyDescriptor);
             //Icon icon = new Icon(System.IO.File.OpenRead("\\Storage Card\\micono.ico"));
             DataGridIconColumn colIcono = new DataGridIconColumn();
-            colIcono.ColumnIcon = new Icon(System.IO.File.OpenRead("\\Storage Card\\micono.ico"));
-            colIcono.MappingName = "";
-            colIcono.HeaderText = "";
+            colIcono.ColumnIcon = new Icon(System.IO.File.OpenRead("\\Storage Card\\nav_plain_blue.ico"),16,16);
+            colIcono.MappingName = "NInstalacion";
+            colIcono.HeaderText = "ICO";
             colIcono.Width = 20;
 
             DataGridTextBoxColumn colDispositivo = new DataGridTextBoxColumn();

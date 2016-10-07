@@ -42,6 +42,10 @@
             this.panel4 = new System.Windows.Forms.Panel();
             this.txtComentario = new System.Windows.Forms.TextBox();
             this.lblComentario = new System.Windows.Forms.Label();
+            this.lblPos = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtPos = new System.Windows.Forms.TextBox();
+            this.txtPoss = new System.Windows.Forms.TextBox();
             this.panel4.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -66,7 +70,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblCaptura.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular);
             this.lblCaptura.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblCaptura.Location = new System.Drawing.Point(21, 13);
+            this.lblCaptura.Location = new System.Drawing.Point(21, 7);
             this.lblCaptura.Name = "lblCaptura";
             this.lblCaptura.Size = new System.Drawing.Size(202, 25);
             this.lblCaptura.Text = "Dispositivo a sustituir";
@@ -76,7 +80,7 @@
             // 
             this.txtCaptura.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtCaptura.Location = new System.Drawing.Point(21, 41);
+            this.txtCaptura.Location = new System.Drawing.Point(21, 35);
             this.txtCaptura.Name = "txtCaptura";
             this.txtCaptura.Size = new System.Drawing.Size(114, 21);
             this.txtCaptura.TabIndex = 1;
@@ -85,7 +89,7 @@
             // 
             this.btnAceptar.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnAceptar.Location = new System.Drawing.Point(141, 43);
+            this.btnAceptar.Location = new System.Drawing.Point(141, 37);
             this.btnAceptar.Name = "btnAceptar";
             this.btnAceptar.Size = new System.Drawing.Size(76, 19);
             this.btnAceptar.TabIndex = 2;
@@ -96,7 +100,7 @@
             // 
             this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.button1.Location = new System.Drawing.Point(141, 146);
+            this.button1.Location = new System.Drawing.Point(141, 140);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(76, 20);
             this.button1.TabIndex = 4;
@@ -107,7 +111,7 @@
             // 
             this.txtSustituto.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtSustituto.Location = new System.Drawing.Point(21, 145);
+            this.txtSustituto.Location = new System.Drawing.Point(21, 139);
             this.txtSustituto.Name = "txtSustituto";
             this.txtSustituto.Size = new System.Drawing.Size(114, 21);
             this.txtSustituto.TabIndex = 3;
@@ -118,7 +122,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblSustituto.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular);
             this.lblSustituto.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.lblSustituto.Location = new System.Drawing.Point(21, 117);
+            this.lblSustituto.Location = new System.Drawing.Point(21, 115);
             this.lblSustituto.Name = "lblSustituto";
             this.lblSustituto.Size = new System.Drawing.Size(202, 25);
             this.lblSustituto.Text = "Dispositivo sustiuto";
@@ -130,7 +134,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblInfOriginal.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular);
             this.lblInfOriginal.ForeColor = System.Drawing.Color.DimGray;
-            this.lblInfOriginal.Location = new System.Drawing.Point(21, 65);
+            this.lblInfOriginal.Location = new System.Drawing.Point(21, 59);
             this.lblInfOriginal.Name = "lblInfOriginal";
             this.lblInfOriginal.Size = new System.Drawing.Size(202, 43);
             this.lblInfOriginal.Text = "Dispositivo a sustituir";
@@ -141,7 +145,7 @@
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.lblInfSustituto.Font = new System.Drawing.Font("Tahoma", 10F, System.Drawing.FontStyle.Regular);
             this.lblInfSustituto.ForeColor = System.Drawing.Color.DimGray;
-            this.lblInfSustituto.Location = new System.Drawing.Point(21, 169);
+            this.lblInfSustituto.Location = new System.Drawing.Point(21, 163);
             this.lblInfSustituto.Name = "lblInfSustituto";
             this.lblInfSustituto.Size = new System.Drawing.Size(202, 37);
             this.lblInfSustituto.Text = "Dispositivo sustituto";
@@ -158,10 +162,10 @@
             // txtComentario
             // 
             this.txtComentario.Dock = System.Windows.Forms.DockStyle.Top;
-            this.txtComentario.Location = new System.Drawing.Point(0, 17);
+            this.txtComentario.Location = new System.Drawing.Point(0, 21);
             this.txtComentario.Multiline = true;
             this.txtComentario.Name = "txtComentario";
-            this.txtComentario.Size = new System.Drawing.Size(240, 26);
+            this.txtComentario.Size = new System.Drawing.Size(240, 50);
             this.txtComentario.TabIndex = 5;
             // 
             // lblComentario
@@ -170,8 +174,40 @@
             this.lblComentario.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblComentario.Location = new System.Drawing.Point(0, 0);
             this.lblComentario.Name = "lblComentario";
-            this.lblComentario.Size = new System.Drawing.Size(240, 17);
+            this.lblComentario.Size = new System.Drawing.Size(240, 21);
             this.lblComentario.Text = "Comentarios:";
+            // 
+            // lblPos
+            // 
+            this.lblPos.Location = new System.Drawing.Point(23, 77);
+            this.lblPos.Name = "lblPos";
+            this.lblPos.Size = new System.Drawing.Size(193, 14);
+            this.lblPos.Text = "Nueva ubicación";
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(21, 177);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(193, 14);
+            this.label1.Text = "Nueva ubicación";
+            // 
+            // txtPos
+            // 
+            this.txtPos.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPos.Location = new System.Drawing.Point(23, 94);
+            this.txtPos.Name = "txtPos";
+            this.txtPos.Size = new System.Drawing.Size(194, 21);
+            this.txtPos.TabIndex = 10;
+            // 
+            // txtPoss
+            // 
+            this.txtPoss.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.txtPoss.Location = new System.Drawing.Point(23, 194);
+            this.txtPoss.Name = "txtPoss";
+            this.txtPoss.Size = new System.Drawing.Size(200, 21);
+            this.txtPoss.TabIndex = 11;
             // 
             // CambioForm
             // 
@@ -179,6 +215,10 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
             this.AutoScroll = true;
             this.ClientSize = new System.Drawing.Size(240, 268);
+            this.Controls.Add(this.txtPoss);
+            this.Controls.Add(this.txtPos);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.lblPos);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.lblInfSustituto);
             this.Controls.Add(this.lblInfOriginal);
@@ -212,5 +252,9 @@
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.TextBox txtComentario;
         private System.Windows.Forms.Label lblComentario;
+        private System.Windows.Forms.Label lblPos;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox txtPos;
+        private System.Windows.Forms.TextBox txtPoss;
     }
 }

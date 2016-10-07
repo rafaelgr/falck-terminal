@@ -168,6 +168,7 @@
             // dtpFecha
             // 
             this.dtpFecha.Dock = System.Windows.Forms.DockStyle.Top;
+            this.dtpFecha.Enabled = false;
             this.dtpFecha.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpFecha.Location = new System.Drawing.Point(0, 20);
             this.dtpFecha.Name = "dtpFecha";
