@@ -15,9 +15,9 @@ namespace LainsaTerminalLib
             get { return programaId; }
             set { programaId = value; }
         }
-        private DateTime fechaProgramada;
+        private DateTime? fechaProgramada;
 
-        public DateTime FechaProgramada
+        public DateTime? FechaProgramada
         {
             get { return fechaProgramada; }
             set { fechaProgramada = value; }
@@ -196,13 +196,14 @@ namespace LainsaTerminalLib
                     TPrograma tp = new TPrograma()
                     {
                         ProgramaId = dr.GetInt32(0),
-                        FechaProgramada = dr.GetDateTime(1),
+                        FechaProgramada = null, // dr.GetDateTime(1),
                         NUsuario = dr.GetString(2),
                         Estado = dr.GetString(3),
                         Comentarios = dr.GetString(4),
                         NInstalacion = dr.GetString(5),
                         Abm = dr.GetByte(6)
                     };
+                    if (dr[1] != DBNull.Value) tp.FechaProgramada = dr.GetDateTime(1);
                     if (tp != null) l.Add(tp);
                 }
                 if (!dr.IsClosed) dr.Close();
