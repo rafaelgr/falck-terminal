@@ -384,10 +384,10 @@ namespace LainsaTerminalLib
             tr.HayIncidencia = false;
             using (SqlCeCommand cmd = conn.CreateCommand())
             {
-                cmd.CommandText = String.Format("SELECT * FROM Incidencia WHERE dispositivo_id = {0}",
+                cmd.CommandText = String.Format("SELECT * FROM Incidencia WHERE disp_id = {0}",
                     dspId);
                 SqlCeDataReader dr = cmd.ExecuteReader();
-                if (dr.HasRows)
+                while (dr.Read())
                 {
                     tr.HayIncidencia = true;
                 }

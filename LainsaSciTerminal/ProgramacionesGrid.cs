@@ -33,18 +33,18 @@ namespace LainsaSciTerminal
             else
                 ltp = CntSciTerminal.GetTProgramasC(usuario.TGrupoTrabajo.GrupoTrabajoId, conn);
             // Filtrar las que pertenecen a las instalaciones autorizadas
-            if (usuario.Instalaciones.Count > 0)
-            {
-                IList<TPrograma> ltp2 = new List<TPrograma>();
-                foreach (TPrograma tp2 in ltp)
-                {
-                    if (CntSciTerminal.checkInstalacion(usuario,tp2.NInstalacion))
-                    {
-                        ltp2.Add(tp2);
-                    }
-                }
-                ltp = ltp2;
-            }
+            //if (usuario.Instalaciones.Count > 0)
+            //{
+            //    IList<TPrograma> ltp2 = new List<TPrograma>();
+            //    foreach (TPrograma tp2 in ltp)
+            //    {
+            //        if (CntSciTerminal.checkInstalacion(usuario,tp2.NInstalacion))
+            //        {
+            //            ltp2.Add(tp2);
+            //        }
+            //    }
+            //    ltp = ltp2;
+            //}
             CntSciTerminal.TClose(this.conn);
             grdProgramas.DataSource = ltp.ToArray<TPrograma>();
             CrearEstiloColumnas();

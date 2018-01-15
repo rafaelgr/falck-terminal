@@ -49,24 +49,25 @@ namespace LainsaSciTerminal
                 ltr = CntSciTerminal.GetTRevisiones(vPrograma, conn);
             else
                 ltr = CntSciTerminal.GetTRevisiones(false, vDispositivo, conn);
-            CntSciTerminal.TClose(this.conn);
-            //foreach (TRevision r in ltr)
-            //{
-            //    r.HayIncidencia = CntSciTerminal.HayIncidencias(r, conn).HayIncidencia;
-            //}
-            // Filtrar las revisiones para las que se tiene permiso.
-            if (usuario.Instalaciones.Count > 0)
+            foreach (TRevision r in ltr)
             {
-                ltr2 = new List<TRevision>();
-                foreach (TRevision r in ltr)
-                {
-                    if (usuario.Instalaciones.Count > 0 && CntSciTerminal.checkInstalacion(usuario, r.NInstalacion))
-                    {
-                        ltr2.Add(r);
-                    }
-                }
-                ltr = ltr2;
+                r.HayIncidencia = CntSciTerminal.HayIncidencias(r, conn).HayIncidencia;
             }
+            CntSciTerminal.TClose(this.conn);
+
+            // Filtrar las revisiones para las que se tiene permiso.
+            //if (usuario.Instalaciones.Count > 0)
+            //{
+            //    ltr2 = new List<TRevision>();
+            //    foreach (TRevision r in ltr)
+            //    {
+            //        if (usuario.Instalaciones.Count > 0 && CntSciTerminal.checkInstalacion(usuario, r.NInstalacion))
+            //        {
+            //            ltr2.Add(r);
+            //        }
+            //    }
+            //    ltr = ltr2;
+            //}
             grdRevisiones.DataSource = ltr.ToArray<TRevision>();
             CrearEstiloColumnas();
             CntSciTerminal.pLtr = ltr;
