@@ -199,6 +199,41 @@ namespace LainsaTerminalLib
             get { return abm; }
             set { abm = value; }
         }
+
+        // Nuevos campos v 2018.0.1.0
+        private decimal cargaKg;
+        public decimal CargaKg
+        {
+            get { return cargaKg; }
+            set { cargaKg = value; }
+        }
+
+        private TFabricante fabricante;
+        public TFabricante Fabricante
+        {
+            get
+            {
+                return fabricante;
+            }
+            set
+            {
+                modelo = value;
+            }
+        }
+
+        private DateTime fechaFabricacion;
+        public DateTime FechaFabricacion
+        {
+            get
+            {
+                return fechaFabricacion;
+            }
+            set
+            {
+                fechaFabricacion = value;
+            }
+        }
+
     }
 
     public static partial class CntSciTerminal
@@ -227,6 +262,11 @@ namespace LainsaTerminalLib
             if (dr[11] != DBNull.Value)
                dispositivo.Modelo = GetTModeloDispositivo(dr.GetInt32(11), conn);
             dispositivo.Abm = dr.GetByte(15);
+            // nuevos campos vrs 2018.0.1.0
+            dispositivo.CargaKg = dr.GetDecimal(16);
+            dispositivo.Fabricante = GetTFabricante(dr.GetInt32(17), conn);
+            if (dr[18] != DBNull.Value)
+                dispositivo.FechaFabricacion = dr.GetDateTime(18); 
         }
         public static TDispositivo GetTDispositivo(int id, SqlCeConnection conn)
         {
@@ -305,7 +345,7 @@ namespace LainsaTerminalLib
                 sql = @"INSERT INTO Dispositivo(dispositivo_id, nombre, 
                             empresa, instalacion, 
                             tipo, funcion, estado,
-                            fecha_caducidad, caducado, fecha_baja, codbarras, modelo, operativo, posicion, abm) VALUES({0},'{1}','{2}',{3},{4},'{5}','{6}',{7},{8},{9},'{10}',{11},'{12}','{13}',1)";
+                            fecha_caducidad, caducado, fecha_baja, codbarras, modelo, operativo, posicion, abm, carga_kg, fabricante_id) VALUES({0},'{1}','{2}',{3},{4},'{5}','{6}',{7},{8},{9},'{10}',{11},'{12}','{13}',{14},{15})";
             }
             else
             {
@@ -314,7 +354,7 @@ namespace LainsaTerminalLib
                         fecha_caducidad={7}, caducado='{8}', fecha_baja={9}, codbarras='{10}', modelo={11}, operativo='{12}', posicion='{13}', abm={14}
                         WHERE dispositivo_id={0}";
             }
-            sql = String.Format(sql, td.DispositivoId, td.Nombre, td.Empresa, td.Instalacion.InstalacionId, td.Tipo.TipoDispositivoId, td.Funcion, td.Estado,fecha_caducidad,caducado,fecha_baja,td.CodBarras, modelo, operativo, posicion, abm);
+            sql = String.Format(sql, td.DispositivoId, td.Nombre, td.Empresa, td.Instalacion.InstalacionId, td.Tipo.TipoDispositivoId, td.Funcion, td.Estado,fecha_caducidad,caducado,fecha_baja,td.CodBarras, modelo, operativo, posicion, abm, td.CargaKg, td.Fabricante.FabricanteId );
             using (SqlCeCommand cmd = conn.CreateCommand())
             {
                 cmd.CommandText = sql;
