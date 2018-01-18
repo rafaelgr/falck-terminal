@@ -111,12 +111,13 @@ namespace LainsaTerminalLib
                     programa = new TPrograma()
                     {
                         ProgramaId = dr.GetInt32(0),
-                        FechaProgramada = dr.GetDateTime(1),
                         NUsuario = dr.GetString(2),
                         Estado = dr.GetString(3),
                         Comentarios = dr.GetString(4),
                         Abm = dr.GetByte(5)
                     };
+                    if (dr[1] != DBNull.Value)
+                        programa.FechaProgramada = dr.GetDateTime(1);
                 }
                 if (!dr.IsClosed) dr.Close();
                 // Ahora NO buscamos las revisiones asociadas para evitar bucles.

@@ -25,6 +25,12 @@ namespace LainsaSciTerminal
             CargarInstalaciones();
             CargarTipos();
             CargarModelos();
+            CargarFabricantes();
+            CargarAgentesExtintores();
+            CargarFunciones();
+            dtFechaFabricacion.Format = DateTimePickerFormat.Custom;
+            dtFechaFabricacion.CustomFormat = "dd/MM/yyyy";
+            dtFechaFabricacion.Value = DateTime.Now;
             Cursor.Current = Cursors.Default;
         }
         private void CargarInstalaciones()
@@ -67,6 +73,47 @@ namespace LainsaSciTerminal
             }
             CntSciTerminal.TClose(this.conn);
         }
+
+        private void CargarFabricantes()
+        {
+            cmbFabricante.Items.Clear();
+            cmbFabricante.Items.Add(new ListItem(-1, ""));
+            cmbTipo.DisplayMember = "Name";
+            cmbTipo.ValueMember = "ID";
+            // cargamos el desplegable.
+            CntSciTerminal.TOpen(this.conn);
+            foreach (TFabricante ttpa in CntSciTerminal.GetTFabricantes(conn))
+            {
+                cmbFabricante.Items.Add(new ListItem(ttpa.FabricanteId, ttpa.Nombre));
+            }
+            CntSciTerminal.TClose(this.conn);
+        }
+
+        private void CargarAgentesExtintores()
+        {
+            cmbAgenteExtintor.Items.Clear();
+            cmbAgenteExtintor.Items.Add(new ListItem(-1, ""));
+            cmbTipo.DisplayMember = "Name";
+            cmbTipo.ValueMember = "ID";
+            // cargamos el desplegable.
+            CntSciTerminal.TOpen(this.conn);
+            foreach (TAgenteExtintor ttpa in CntSciTerminal.GetTAgenteExtintors(conn))
+            {
+                cmbAgenteExtintor.Items.Add(new ListItem(ttpa.AgenteExtintorId, ttpa.Descripcion));
+            }
+            CntSciTerminal.TClose(this.conn);
+        }
+        private void CargarFunciones()
+        {
+            cmbFuncion.Items.Clear();
+            cmbFuncion.Items.Add(new ListItem(-1, ""));
+            cmbTipo.DisplayMember = "Name";
+            cmbTipo.ValueMember = "ID";
+            // cargamos el desplegable.
+            cmbFuncion.Items.Add(new ListItem(0, "Original"));
+            cmbFuncion.Items.Add(new ListItem(1, "Repuesto"));
+        }
+
         private void mnuAceptar_Click(object sender, EventArgs e)
         {
             if (!DatosOk()) return;
@@ -129,7 +176,15 @@ namespace LainsaSciTerminal
                 dispositivo.Modelo = CntSciTerminal.GetTModeloDispositivo(((ListItem)cmbModelo.SelectedItem).ID, conn);
             dispositivo.Operativo = true;
             dispositivo.Empresa = CntSciTerminal.GetTEmpresa(conn).Nombre;
-           
+            if (cmbFuncion.SelectedItem != null && ((ListItem)cmbFuncion.SelectedItem).ID > 0)
+                dispositivo.Funcion = ((ListItem)cmbFuncion.SelectedItem).Name.Substring(1,1);
+            if (txtCargaKg.Text != "") dispositivo.CargaKg = Convert.ToDouble(txtCargaKg.Text);
+            if (cmbFabricante.SelectedItem != null && ((ListItem)cmbFabricante.SelectedItem).ID >= 0)
+                dispositivo.Fabricante = CntSciTerminal.GetTFabricante(((ListItem)cmbFabricante.SelectedItem).ID, conn);
+            if (cmbAgenteExtintor.SelectedItem != null && ((ListItem)cmbAgenteExtintor.SelectedItem).ID >= 0)
+                dispositivo.AgenteExtintor = CntSciTerminal.GetTAgenteExtintor(((ListItem)cmbModelo.SelectedItem).ID, conn);
+            if (dtFechaFabricacion.Value != null)
+                dispositivo.FechaFabricacion = dtFechaFabricacion.Value;
             CntSciTerminal.TSave(dispositivo, conn);
         }
         private void mnuSalir_Click(object sender, EventArgs e)

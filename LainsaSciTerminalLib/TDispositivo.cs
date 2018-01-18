@@ -201,8 +201,16 @@ namespace LainsaTerminalLib
         }
 
         // Nuevos campos v 2018.0.1.0
-        private decimal cargaKg;
-        public decimal CargaKg
+
+        private string nIndustria;
+        public string NIndustria
+        {
+            get { return nIndustria; }
+            set { nIndustria = value; }
+        }
+
+        private double cargaKg;
+        public double CargaKg
         {
             get { return cargaKg; }
             set { cargaKg = value; }
@@ -217,7 +225,7 @@ namespace LainsaTerminalLib
             }
             set
             {
-                modelo = value;
+                fabricante = value;
             }
         }
 
@@ -234,6 +242,18 @@ namespace LainsaTerminalLib
             }
         }
 
+        private TAgenteExtintor agenteExtintor;
+        public TAgenteExtintor AgenteExtintor
+        {
+            get
+            {
+                return agenteExtintor;
+            }
+            set
+            {
+                agenteExtintor = value;
+            }
+        }
     }
 
     public static partial class CntSciTerminal
@@ -263,10 +283,16 @@ namespace LainsaTerminalLib
                dispositivo.Modelo = GetTModeloDispositivo(dr.GetInt32(11), conn);
             dispositivo.Abm = dr.GetByte(15);
             // nuevos campos vrs 2018.0.1.0
-            dispositivo.CargaKg = dr.GetDecimal(16);
-            dispositivo.Fabricante = GetTFabricante(dr.GetInt32(17), conn);
+            if (dr[16] != DBNull.Value)
+                dispositivo.NIndustria = dr.GetString(16);
+            if (dr[17] != DBNull.Value)
+                dispositivo.CargaKg = dr.GetDouble(17);
             if (dr[18] != DBNull.Value)
-                dispositivo.FechaFabricacion = dr.GetDateTime(18); 
+                dispositivo.Fabricante = GetTFabricante(dr.GetInt32(18), conn);
+            if (dr[19] != DBNull.Value)
+                dispositivo.FechaFabricacion = dr.GetDateTime(19);
+            if (dr[20] != DBNull.Value)
+                dispositivo.AgenteExtintor = GetTAgenteExtintor(dr.GetInt32(20), conn);
         }
         public static TDispositivo GetTDispositivo(int id, SqlCeConnection conn)
         {
@@ -307,6 +333,7 @@ namespace LainsaTerminalLib
             string sql = "";
             string fecha_caducidad = "NULL";
             string fecha_baja = "NULL";
+            string fecha_fabricacion = "NULL";
             int caducado = 0;
             int operativo = 1;
             if (!td.Operativo) operativo = 0;
@@ -324,6 +351,18 @@ namespace LainsaTerminalLib
             //
             byte abm = td.Abm;
             if (abm != 1) abm = 3;
+            // Nuevos campos VRS 2018.0.1.0
+            // td.Funcion -> ya viene precargado    
+            // td.CargaKg -> precargado
+            if (!CntSciTerminal.FechaNula(td.FechaFabricacion))
+                fecha_fabricacion = String.Format("CONVERT(DATETIME,'{0:yyyy-MM-dd HH:mm:ss}',102)", td.FechaFabricacion);
+            int fabricante = 0;
+            if (td.Fabricante != null)
+                fabricante = td.Fabricante.FabricanteId;
+            int agente = 0;
+            if (td.AgenteExtintor != null)
+                agente = td.AgenteExtintor.AgenteExtintorId;
+            //
             TDispositivo tdsp = GetTDispositivo(td.DispositivoId, conn);
             if (tdsp == null)
             {
@@ -345,16 +384,16 @@ namespace LainsaTerminalLib
                 sql = @"INSERT INTO Dispositivo(dispositivo_id, nombre, 
                             empresa, instalacion, 
                             tipo, funcion, estado,
-                            fecha_caducidad, caducado, fecha_baja, codbarras, modelo, operativo, posicion, abm, carga_kg, fabricante_id) VALUES({0},'{1}','{2}',{3},{4},'{5}','{6}',{7},{8},{9},'{10}',{11},'{12}','{13}',{14},{15})";
+                            fecha_caducidad, caducado, fecha_baja, codbarras, modelo, operativo, posicion, abm, carga_kg, fabricante_id, fecha_fabricacion, agente_extintor_id) VALUES({0},'{1}','{2}',{3},{4},'{5}','{6}',{7},{8},{9},'{10}',{11},'{12}','{13}',{14},{15},{16}, {17}, {18})";
             }
             else
             {
                 sql = @"UPDATE Dispositivo SET nombre='{1}',empresa='{2}',instalacion={3},
                         tipo={4}, funcion='{5}', estado='{6}',
-                        fecha_caducidad={7}, caducado='{8}', fecha_baja={9}, codbarras='{10}', modelo={11}, operativo='{12}', posicion='{13}', abm={14}
+                        fecha_caducidad={7}, caducado='{8}', fecha_baja={9}, codbarras='{10}', modelo={11}, operativo='{12}', posicion='{13}', abm={14}, carga_kg = {15}, fabricante_id = {16}, fecha_fabricacion = {17}, agente_exitintor_id = {18}
                         WHERE dispositivo_id={0}";
             }
-            sql = String.Format(sql, td.DispositivoId, td.Nombre, td.Empresa, td.Instalacion.InstalacionId, td.Tipo.TipoDispositivoId, td.Funcion, td.Estado,fecha_caducidad,caducado,fecha_baja,td.CodBarras, modelo, operativo, posicion, abm, td.CargaKg, td.Fabricante.FabricanteId );
+            sql = String.Format(sql, td.DispositivoId, td.Nombre, td.Empresa, td.Instalacion.InstalacionId, td.Tipo.TipoDispositivoId, td.Funcion, td.Estado,fecha_caducidad,caducado,fecha_baja,td.CodBarras, modelo, operativo, posicion, abm, td.CargaKg, fabricante, fecha_fabricacion, agente );
             using (SqlCeCommand cmd = conn.CreateCommand())
             {
                 cmd.CommandText = sql;
