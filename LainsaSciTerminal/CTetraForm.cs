@@ -55,8 +55,19 @@ namespace LainsaSciTerminal
         private void mnuSiguiente_Click(object sender, EventArgs e)
         {
             pos++;
-            if (pos >= tr.DatosRevision.Count) pos = tr.DatosRevision.Count - 1;
-            LlamarDistribuidor();
+            if (pos >= tr.DatosRevision.Count)
+            {
+                Cursor.Current = Cursors.WaitCursor;
+                tdr.Valor = GetValor();
+                //CntSciTerminal.TSave(tdr, conn);
+                CFinalForm frmFinal = new CFinalForm(tr, tr.DatosRevision.Count, caller, usuario);
+                frmFinal.Show();
+                this.Close();
+            }
+            else
+            {
+                LlamarDistribuidor();
+            }
         }
 
         private void mnuUltimo_Click(object sender, EventArgs e)
@@ -123,8 +134,8 @@ namespace LainsaSciTerminal
             }
             else if (pos == tr.DatosRevision.Count - 1)
             {
-                mnuSiguiente.Enabled = false;
-                mnuUltimo.Enabled = false;
+                // mnuSiguiente.Enabled = false;
+                // mnuUltimo.Enabled = false;
             }
         }
 

@@ -167,7 +167,7 @@
             // 
             // btnDO
             // 
-            this.btnDO.Location = new System.Drawing.Point(165, 0);
+            this.btnDO.Location = new System.Drawing.Point(158, 0);
             this.btnDO.Name = "btnDO";
             this.btnDO.Size = new System.Drawing.Size(72, 20);
             this.btnDO.TabIndex = 5;

@@ -390,7 +390,7 @@ namespace LainsaTerminalLib
             {
                 sql = @"UPDATE Dispositivo SET nombre='{1}',empresa='{2}',instalacion={3},
                         tipo={4}, funcion='{5}', estado='{6}',
-                        fecha_caducidad={7}, caducado='{8}', fecha_baja={9}, codbarras='{10}', modelo={11}, operativo='{12}', posicion='{13}', abm={14}, carga_kg = {15}, fabricante_id = {16}, fecha_fabricacion = {17}, agente_exitintor_id = {18}
+                        fecha_caducidad={7}, caducado='{8}', fecha_baja={9}, codbarras='{10}', modelo={11}, operativo='{12}', posicion='{13}', abm={14}, carga_kg = {15}, fabricante_id = {16}, fecha_fabricacion = {17}, agente_extintor_id = {18}
                         WHERE dispositivo_id={0}";
             }
             sql = String.Format(sql, td.DispositivoId, td.Nombre, td.Empresa, td.Instalacion.InstalacionId, td.Tipo.TipoDispositivoId, td.Funcion, td.Estado,fecha_caducidad,caducado,fecha_baja,td.CodBarras, modelo, operativo, posicion, abm, td.CargaKg, fabricante, fecha_fabricacion, agente );

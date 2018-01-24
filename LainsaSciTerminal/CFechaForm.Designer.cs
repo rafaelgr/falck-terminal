@@ -28,10 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mnuPrimero = new System.Windows.Forms.MenuItem();
             this.mnuAnterior = new System.Windows.Forms.MenuItem();
             this.mnuSiguiente = new System.Windows.Forms.MenuItem();
-            this.mnuUltimo = new System.Windows.Forms.MenuItem();
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.mnuSalir = new System.Windows.Forms.MenuItem();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -45,11 +43,6 @@
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mnuPrimero
-            // 
-            this.mnuPrimero.Text = "<<";
-            this.mnuPrimero.Click += new System.EventHandler(this.mnuPrimero_Click);
-            // 
             // mnuAnterior
             // 
             this.mnuAnterior.Text = "<";
@@ -60,18 +53,11 @@
             this.mnuSiguiente.Text = ">";
             this.mnuSiguiente.Click += new System.EventHandler(this.mnuSiguiente_Click);
             // 
-            // mnuUltimo
-            // 
-            this.mnuUltimo.Text = ">>";
-            this.mnuUltimo.Click += new System.EventHandler(this.mnuUltimo_Click);
-            // 
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.Add(this.mnuSalir);
-            this.mainMenu1.MenuItems.Add(this.mnuPrimero);
             this.mainMenu1.MenuItems.Add(this.mnuAnterior);
             this.mainMenu1.MenuItems.Add(this.mnuSiguiente);
-            this.mainMenu1.MenuItems.Add(this.mnuUltimo);
             // 
             // mnuSalir
             // 
@@ -175,10 +161,8 @@
 
         #endregion
 
-        private System.Windows.Forms.MenuItem mnuPrimero;
         private System.Windows.Forms.MenuItem mnuAnterior;
         private System.Windows.Forms.MenuItem mnuSiguiente;
-        private System.Windows.Forms.MenuItem mnuUltimo;
         private System.Windows.Forms.MainMenu mainMenu1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblComentarios;

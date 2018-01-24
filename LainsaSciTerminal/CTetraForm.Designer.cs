@@ -40,11 +40,8 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.mainMenu1 = new System.Windows.Forms.MainMenu();
             this.mnuSalir = new System.Windows.Forms.MenuItem();
-            this.mnuPrimero = new System.Windows.Forms.MenuItem();
             this.mnuAnterior = new System.Windows.Forms.MenuItem();
             this.mnuSiguiente = new System.Windows.Forms.MenuItem();
-            this.mnuUltimo = new System.Windows.Forms.MenuItem();
-            this.mnuFin = new System.Windows.Forms.MenuItem();
             this.lblPosicion = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
@@ -152,21 +149,13 @@
             // mainMenu1
             // 
             this.mainMenu1.MenuItems.Add(this.mnuSalir);
-            this.mainMenu1.MenuItems.Add(this.mnuPrimero);
             this.mainMenu1.MenuItems.Add(this.mnuAnterior);
             this.mainMenu1.MenuItems.Add(this.mnuSiguiente);
-            this.mainMenu1.MenuItems.Add(this.mnuUltimo);
-            this.mainMenu1.MenuItems.Add(this.mnuFin);
             // 
             // mnuSalir
             // 
             this.mnuSalir.Text = "Salir";
             this.mnuSalir.Click += new System.EventHandler(this.mnuSalir_Click);
-            // 
-            // mnuPrimero
-            // 
-            this.mnuPrimero.Text = "<<";
-            this.mnuPrimero.Click += new System.EventHandler(this.mnuPrimero_Click);
             // 
             // mnuAnterior
             // 
@@ -177,16 +166,6 @@
             // 
             this.mnuSiguiente.Text = ">";
             this.mnuSiguiente.Click += new System.EventHandler(this.mnuSiguiente_Click);
-            // 
-            // mnuUltimo
-            // 
-            this.mnuUltimo.Text = ">>";
-            this.mnuUltimo.Click += new System.EventHandler(this.mnuUltimo_Click);
-            // 
-            // mnuFin
-            // 
-            this.mnuFin.Text = "FIN";
-            this.mnuFin.Click += new System.EventHandler(this.mnuFin_Click);
             // 
             // lblPosicion
             // 
@@ -247,11 +226,8 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.MainMenu mainMenu1;
         private System.Windows.Forms.MenuItem mnuSalir;
-        private System.Windows.Forms.MenuItem mnuPrimero;
         private System.Windows.Forms.MenuItem mnuAnterior;
         private System.Windows.Forms.MenuItem mnuSiguiente;
-        private System.Windows.Forms.MenuItem mnuUltimo;
-        private System.Windows.Forms.MenuItem mnuFin;
         private System.Windows.Forms.Label lblPosicion;
         private System.Windows.Forms.Label label1;
 
